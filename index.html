@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Prototype de l’espace adhérent Angers au Cœur">
+  <meta name="theme-color" content="#0b2140">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://www.angersaucoeur.org data:; connect-src 'self'; frame-src https://script.google.com https://script.googleusercontent.com; upgrade-insecure-requests">
+  <title>Espace adhérent — Angers au Cœur</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://www.angersaucoeur.org" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/transport.js" defer></script>
+  <script src="js/loader.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#app-main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo-wrap" href="#/accueil" aria-label="Accueil Angers au Cœur">
+        <img src="https://www.angersaucoeur.org/images/logo-angers-au-coeur.png" alt="Angers au Cœur" width="92" height="62">
+      </a>
+      <nav id="main-nav" class="nav" aria-label="Navigation principale" hidden></nav>
+      <div id="account" class="header-actions" hidden>
+        <button id="profile-button" class="btn btn-outline" type="button">Mon profil</button>
+        <button id="logout-button" class="btn btn-outline" type="button">Déconnexion</button>
+      </div>
+      <button class="menu-btn" data-menu type="button" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false" hidden>☰</button>
+    </div>
+  </header>
+
+  <main id="app-main" class="container" tabindex="-1">
+    <section class="auth card initial-shell" aria-busy="true">
+      <p class="eyebrow">ESPACE ADHÉRENT · PROTOTYPE</p>
+      <h1>Se connecter</h1>
+      <div class="skeleton skeleton-field"></div>
+      <div class="skeleton skeleton-field"></div>
+      <div class="skeleton skeleton-button"></div>
+      <p class="sr-only">Chargement du formulaire de connexion…</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Mouvement politique indépendant · Espace réservé aux membres · Prototype de test</p>
+      <p class="text-muted text-small mt-1">
+        <a href="https://www.angersaucoeur.org/mentions-legales.html" target="_blank" rel="noopener">Mentions légales</a> ·
+        <a href="https://www.angersaucoeur.org/confidentialite.html" target="_blank" rel="noopener">Confidentialité</a>
+      </p>
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <aside id="debug-panel" class="debug-panel" aria-label="Diagnostic de performance" hidden></aside>
+  <iframe id="aac-bridge" class="transport-frame" title="Connexion sécurisée au service Angers au Cœur" hidden></iframe>
+  <noscript>JavaScript est nécessaire pour utiliser cet espace.</noscript>
+</body>
+</html>

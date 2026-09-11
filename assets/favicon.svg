@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Angers au Cœur">
+  <rect width="64" height="64" rx="14" fill="#0b2140"/>
+  <path d="M32 49C18 40 12 32 12 23.5A11.5 11.5 0 0 1 32 16a11.5 11.5 0 0 1 20 7.5C52 32 46 40 32 49Z" fill="#c82931"/>
+  <path d="M31 22h4v7h7v4h-7v7h-4v-7h-7v-4h7Z" fill="#fff"/>
+</svg>

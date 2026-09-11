@@ -1,0 +1,479 @@
+<!-- Pages d'authentification -->
+<template id="page-login">
+  <section class="auth card">
+    <p class="eyebrow">ESPACE ADHÉRENT</p>
+    <h1>Se connecter</h1>
+    <form id="login-form">
+      <label>Adresse électronique<input name="email" type="email" autocomplete="email" required></label>
+      <label>Mot de passe<input name="password" type="password" autocomplete="current-password" required></label>
+      <div class="alert"></div>
+      <button class="btn btn-navy" type="submit">Se connecter</button>
+    </form>
+    <p><button class="btn btn-link" data-route="forgot-password">Mot de passe oublié ?</button></p>
+    <p>Pas encore membre ? <button class="btn btn-link" data-route="register">Demander à adhérer</button></p>
+  </section>
+</template>
+
+<template id="page-register">
+  <section class="auth wide card">
+    <p class="eyebrow">INSCRIPTION</p>
+    <h1>Rejoindre Angers au Cœur</h1>
+    <form id="register-form">
+      <div class="grid two">
+        <label>Prénom<input name="prenom" required maxlength="80"></label>
+        <label>Nom<input name="nom" required maxlength="100"></label>
+      </div>
+      <label>Adresse électronique<input name="email" type="email" required></label>
+      <div class="grid two">
+        <label>Téléphone<input name="telephone" maxlength="40"></label>
+        <label>Profession<input name="profession" maxlength="180"></label>
+      </div>
+      <label>Quelques mots sur vous<textarea name="commentaire" maxlength="2000"></textarea></label>
+      <div class="grid two">
+        <label>Mot de passe<input name="password" type="password" minlength="12" required></label>
+        <label>Confirmation<input name="passwordConfirmation" type="password" minlength="12" required></label>
+      </div>
+      <div class="charter-consent">
+        <label class="check"><input name="charteAcceptee" type="checkbox" value="true" required> J'adhère aux principes de respect, de loyauté, de confidentialité et de contribution constructive de la charte des membres.</label>
+        <button id="read-charter" class="btn btn-link" type="button" aria-haspopup="dialog" aria-controls="charter-dialog">Lire la charte</button>
+      </div>
+      <div class="alert"></div>
+      <button class="btn btn-navy" type="submit">Envoyer ma demande</button>
+    </form>
+    <button class="btn btn-link" data-route="login">Retour à la connexion</button>
+  </section>
+</template>
+
+<template id="page-registration-sent">
+  <section class="message card">
+    <h1>Demande enregistrée</h1>
+    <p>Votre demande va être examinée par Angers au Cœur. Aucune action n’est nécessaire pour le moment.</p>
+    <p>Si elle est acceptée, vous recevrez un second e-mail contenant le lien personnel qui confirmera votre adresse et activera votre espace.</p>
+    <button class="btn btn-navy" data-route="login">Retour à la connexion</button>
+  </section>
+</template>
+
+<template id="page-verify-email">
+  <section class="message card">
+    <h1 id="verify-title">Activation de votre espace</h1>
+    <p id="verify-message" aria-live="polite">Vérification en cours…</p>
+    <div class="alert"></div>
+    <button id="verify-login" class="btn btn-navy" data-route="login" hidden>Se connecter</button>
+  </section>
+</template>
+
+<template id="page-pending-approval">
+  <section class="message card">
+    <h1>Demande en cours d'examen</h1>
+    <p>Votre demande est enregistrée. Angers au Cœur l’examine et vous informera par e-mail de sa décision.</p>
+    <button class="btn btn-navy" data-route="login">Retour</button>
+  </section>
+</template>
+
+<template id="page-forgot-password">
+  <section class="auth card">
+    <h1>Mot de passe oublié</h1>
+    <form id="forgot-form">
+      <label>Adresse électronique<input name="email" type="email" required></label>
+      <div class="alert"></div>
+      <button class="btn btn-navy" type="submit">Recevoir un lien</button>
+    </form>
+  </section>
+</template>
+
+<template id="page-reset-password">
+  <section class="auth card">
+    <h1>Nouveau mot de passe</h1>
+    <form id="reset-form">
+      <label>Nouveau mot de passe<input name="password" type="password" minlength="12" required></label>
+      <label>Confirmation<input name="confirmation" type="password" minlength="12" required></label>
+      <div class="alert"></div>
+      <button class="btn btn-navy" type="submit">Enregistrer</button>
+    </form>
+  </section>
+</template>
+
+<template id="page-activate-membership">
+  <section class="auth card">
+    <p class="eyebrow">ADHÉSION VALIDÉE</p>
+    <h1>Choisir mon mot de passe</h1>
+    <p>Votre accès ne sera activé qu’après l’enregistrement de votre mot de passe personnel.</p>
+    <form id="membership-activation-form">
+      <label>Nouveau mot de passe<input name="password" type="password" minlength="12" autocomplete="new-password" required></label>
+      <label>Confirmation<input name="confirmation" type="password" minlength="12" autocomplete="new-password" required></label>
+      <div class="alert"></div>
+      <button class="btn btn-navy" type="submit">Activer mon espace</button>
+    </form>
+  </section>
+</template>
+
+<template id="page-activation-pending">
+  <section class="message card">
+    <h1>Votre demande a été acceptée</h1>
+    <p>Il reste une dernière étape : ouvrez l’e-mail « Angers au Cœur — activez votre espace adhérent » et cliquez sur « ACTIVER MON ESPACE ». Votre espace sera alors accessible.</p>
+    <p>Si vous ne retrouvez pas ce message, vérifiez vos courriers indésirables puis contactez Angers au Cœur pour recevoir un nouveau lien.</p>
+    <p class="text-muted text-small">Le lien vous ouvrira directement votre espace : vous n’aurez pas à saisir à nouveau votre mot de passe.</p>
+  </section>
+</template>
+
+<template id="page-access-status">
+  <section class="message card">
+    <h1>Accès indisponible</h1>
+    <p>Contactez l'association si vous pensez qu'il s'agit d'une erreur.</p>
+  </section>
+</template>
+
+<template id="page-access-denied">
+  <section class="message card">
+    <h1>Accès refusé</h1>
+    <p>Vous ne disposez pas de l'autorisation nécessaire.</p>
+    <button class="btn btn-navy" data-route="home">Retour à l'accueil</button>
+  </section>
+</template>
+
+<!-- ACCUEIL MEMBRE - V1 -->
+<template id="page-home">
+  <section class="page">
+    <div class="member-header">
+      <p class="greeting" id="home-greeting">Bonjour</p>
+      <p class="question">QUE SOUHAITEZ-VOUS FAIRE ?</p>
+      <div class="quick-actions">
+        <button class="quick-action-card" data-route="ideas">
+          <div class="quick-action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+          <span class="quick-action-label">PROPOSER UNE IDÉE</span>
+        </button>
+        <button class="quick-action-card" data-route="contributions">
+          <div class="quick-action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <span class="quick-action-label">MES CONTRIBUTIONS</span>
+        </button>
+        <button class="quick-action-card" data-route="poles">
+          <div class="quick-action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <span class="quick-action-label">MES PÔLES</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- NOUVEAUX DANS MES PÔLES -->
+    <section class="section-header">
+      <h2 class="section-title">NOUVEAUX DANS MES PÔLES</h2>
+      <p class="section-subtitle">Dernières contributions et sujets dans vos pôles</p>
+    </section>
+    <div id="home-new-items" class="new-items-grid"></div>
+
+    <div class="divider"></div>
+
+    <!-- MES DERNIERES CONTRIBUTIONS -->
+    <section class="section-header">
+      <h2 class="section-title">MES DERNIÈRES CONTRIBUTIONS</h2>
+    </section>
+    <div id="home-contributions" class="stack"></div>
+
+    <p class="help-text">Une idée proposée ici n'est pas une position officielle d'Angers au Cœur. Elle pourra être discutée et devenir un sujet de travail.</p>
+  </section>
+</template>
+
+<!-- MES CONTRIBUTIONS - V1 -->
+<template id="page-contributions">
+  <section class="page">
+    <p class="eyebrow">MON PARCOURS</p>
+    <h1>Mes contributions</h1>
+    <p>Ce que vous avez apporté et ce que l'association en a fait.</p>
+    
+    <div id="contributions-list" class="stack"></div>
+    
+    <p class="help-text">Vous trouverez ici toutes vos idées et contributions. Le statut indique où en est votre proposition dans le processus de travail.</p>
+  </section>
+</template>
+
+<!-- MES PÔLES - V1 -->
+<template id="page-poles">
+  <section class="page">
+    <p class="eyebrow">PARTICIPER</p>
+    <h1>Mes pôles</h1>
+    
+    <!-- MES PÔLES ACTIFS -->
+    <div class="section-header">
+      <h2 class="section-title">MES PÔLES</h2>
+      <p class="section-subtitle">Pôles auxquels vous participez actuellement</p>
+    </div>
+    <div id="my-poles-list" class="pole-card-grid"></div>
+
+    <div class="divider"></div>
+
+    <!-- DÉCOUVRIR D'AUTRES PÔLES -->
+    <div class="section-header">
+      <h2 class="section-title">DÉCOUVRIR D'AUTRES PÔLES</h2>
+      <p class="section-subtitle">Rejoignez d'autres pôles de travail</p>
+    </div>
+    <div id="available-poles-list" class="pole-card-grid"></div>
+  </section>
+</template>
+
+<!-- IDÉES - V1 -->
+<template id="page-ideas">
+  <section class="page">
+    <div class="title">
+      <div>
+        <p class="eyebrow">CONTRIBUER</p>
+        <h1>Mes idées</h1>
+        <p>Retrouvez ici toutes les idées que vous avez proposées.</p>
+      </div>
+      <button id="new-idea" class="btn btn-navy">PROPOSER UNE IDÉE</button>
+    </div>
+    
+    <div id="ideas-list" class="stack"></div>
+  </section>
+</template>
+
+<!-- MUR D'UN PÔLE - V1 -->
+<template id="page-pole">
+  <section class="page">
+    <button class="btn btn-link" data-route="poles">← Mes pôles</button>
+
+    <div id="pole-hero" class="pole-media pole-hero"></div>
+
+    <div class="title mb-3">
+      <div>
+        <h1 id="pole-title">Pôle</h1>
+        <p id="pole-description" class="text-muted"></p>
+      </div>
+      <button id="new-idea-pole" class="btn btn-navy">PROPOSER UNE IDÉE</button>
+    </div>
+
+    <!-- Filtres -->
+    <div class="filter-pills" role="group" aria-label="Trier le mur du pôle">
+      <button class="filter-pill active" type="button" data-filter="feature" aria-pressed="true">À LA UNE</button>
+      <button class="filter-pill" type="button" data-filter="recent" aria-pressed="false">RÉCENTS</button>
+      <button class="filter-pill" type="button" data-filter="supported" aria-pressed="false">LES PLUS SOUTENUS</button>
+    </div>
+
+    <!-- IDÉES -->
+    <div class="section-header">
+      <h2 class="section-title">IDÉES</h2>
+    </div>
+    <div id="pole-ideas" class="stack"></div>
+
+    <div class="divider"></div>
+
+    <!-- SUJETS EN DÉBAT -->
+    <div class="section-header">
+      <h2 class="section-title">SUJETS EN DÉBAT</h2>
+    </div>
+    <div id="pole-subjects" class="stack"></div>
+  </section>
+</template>
+
+<!-- PAGE SUJET - V1 -->
+<template id="page-subject">
+  <section class="page">
+    <button id="subject-back" class="btn btn-link">← Retour au pôle</button>
+    
+    <p class="eyebrow">SUJET DE TRAVAIL</p>
+    <h1 id="subject-title">Sujet</h1>
+    <p id="subject-question" class="text-muted mb-3"></p>
+    
+    <div id="subject-meta" class="mb-3"></div>
+    
+    <button id="subject-support" class="btn secondary">Soutenir</button>
+
+    <div class="divider"></div>
+
+    <article class="card">
+      <h2>Le débat</h2>
+      <p class="text-muted text-small mb-2">Commentaires et contributions des membres</p>
+      <div id="subject-comments" class="stack"></div>
+      
+      <form id="comment-form" class="mt-3">
+        <label>Ajouter votre contribution<textarea name="text" maxlength="3000" required></textarea></label>
+        <div class="alert"></div>
+        <button class="btn btn-navy" type="submit">PARTICIPER AU DÉBAT</button>
+      </form>
+    </article>
+  </section>
+</template>
+
+<!-- ESPACE RÉFÉRENT - V1 -->
+<template id="page-referent">
+  <section class="page">
+    <p class="eyebrow">ESPACE RÉFÉRENT</p>
+    <h1 id="referent-title">Gérer le pôle</h1>
+    <p id="referent-attention" class="state-info"></p>
+
+    <!-- À TRAITER -->
+    <div class="section-header">
+      <h2 class="section-title">À TRAITER</h2>
+      <p class="section-subtitle">Éléments nécessitant votre attention</p>
+    </div>
+    
+    <article class="card mb-3">
+      <h3>Idées à examiner</h3>
+      <div id="referent-ideas" class="stack"></div>
+    </article>
+
+    <article class="card">
+      <h3>Sujets actifs</h3>
+      <div id="referent-subjects" class="stack"></div>
+    </article>
+
+    <p class="help-text">En tant que référent, vous animez le pôle. Utilisez ces outils pour qualifier les idées et modérer les discussions.</p>
+  </section>
+</template>
+
+<!-- PROFIL ET SÉCURITÉ -->
+<template id="page-profile-security">
+  <section class="page narrow">
+    <h1>Mon profil</h1>
+    <article class="card">
+      <form id="profile-form">
+        <div class="grid two">
+          <label>Prénom<input name="prenom" required></label>
+          <label>Nom<input name="nom" required></label>
+        </div>
+        <label>Adresse électronique<input name="email" type="email" required></label>
+        <label>Mot de passe actuel (seulement pour changer l'adresse)<input name="currentPassword" type="password"></label>
+        <div class="grid two">
+          <label>Téléphone<input name="telephone"></label>
+          <label>Âge<input name="age" type="number" min="15" max="120"></label>
+        </div>
+        <label>Profession<input name="profession"></label>
+        <label>Présentation<textarea name="commentaire"></textarea></label>
+        <label>Centres d'intérêt<textarea name="interets"></textarea></label>
+        <div class="alert"></div>
+        <button class="btn btn-navy" type="submit">Enregistrer</button>
+      </form>
+    </article>
+    <article class="card">
+      <h2>Modifier mon mot de passe</h2>
+      <form id="password-form">
+        <label>Mot de passe actuel<input name="currentPassword" type="password" required></label>
+        <label>Nouveau mot de passe<input name="newPassword" type="password" minlength="12" required></label>
+        <label>Confirmation<input name="confirmation" type="password" minlength="12" required></label>
+        <div class="alert"></div>
+        <button class="btn btn-navy" type="submit">Modifier</button>
+      </form>
+    </article>
+    <article class="card">
+      <h2>Sessions ouvertes</h2>
+      <p>Vous pouvez fermer toutes vos autres sessions sans interrompre celle-ci.</p>
+      <button id="logout-all" class="btn btn-outline">Fermer les autres sessions</button>
+    </article>
+  </section>
+</template>
+
+<!-- ADMIN -->
+<template id="page-admin-registrations">
+  <section class="page">
+    <p class="eyebrow">SUPER ADMINISTRATION</p>
+    <h1>Demandes et comptes</h1>
+    <h2>Demandes en attente</h2>
+    <div id="registrations-list" class="stack"></div>
+    <div class="divider"></div>
+    <h2>Comptes actifs et désactivés</h2>
+    <div id="accounts-list" class="stack"></div>
+  </section>
+</template>
+
+<template id="page-admin-registration">
+  <section class="page">
+    <button class="btn btn-link" data-route="admin/registrations">← Inscriptions</button>
+    <h1 id="registration-name">Demande</h1>
+    <div id="registration-detail" class="card"></div>
+    <div id="registration-actions" class="card">
+      <h2>Décision du Super Administrateur</h2>
+    </div>
+  </section>
+</template>
+
+<!-- DIALOGUES -->
+
+<dialog id="charter-dialog" class="charter-dialog" aria-labelledby="charter-dialog-title">
+  <article>
+    <header class="dialog-header">
+      <div><p class="eyebrow">DOCUMENT DE RÉFÉRENCE</p><h2 id="charter-dialog-title">CHARTE DES MEMBRES</h2><p>Mouvement citoyen Angers au Cœur</p></div>
+      <button id="charter-close-top" class="btn btn-outline" type="button" aria-label="Fermer la charte">Fermer</button>
+    </header>
+    <div class="charter-content" tabindex="0">
+      <h3>Préambule</h3>
+      <p>Rejoindre Angers au Cœur, c’est faire le choix d’une action citoyenne sincère, concrète et profondément ancrée dans notre quotidien. Cette charte n'est pas un simple document administratif : elle est le socle de notre confiance mutuelle. Elle rappelle avec des mots simples les valeurs, l'état d'esprit et les principes de bon sens qui nous unissent. Elle donne le cap de notre vie d'équipe et complète nos statuts pour que chacun sache dans quel esprit il est accueilli et attendu au sein du mouvement.</p>
+      <h3>Article 1 – Le collectif avant tout</h3>
+      <p>Faire partie du mouvement, c’est s’engager pour l’Angers, ses habitants et son avenir. En nous rejoignant, nous acceptons de mettre la force du groupe au-dessus de nos intérêts personnels, de nos agendas individuels ou de nos cercles de relations. L'esprit d'équipe et l'intérêt général de notre territoire priment en toutes circonstances.</p>
+      <h3>Article 2 – Nos valeurs communes</h3>
+      <p>Notre action repose sur des fondations solides : le respect de la démocratie, l’honnêteté, la laïcité, l’écoute et la dignité de chacun. Nous accueillons la diversité des parcours avec bienveillance. Logiquement, tout comportement, propos ou attitude qui irait à l'encontre de ce respect mutuel n’a pas sa place au sein de notre collectif.</p>
+      <h3>Article 3 – Un engagement positif et constructif</h3>
+      <p>Nous sommes un mouvement d'action. Chacun y contribue selon son temps, ses moyens et ses envies, que ce soit pour proposer des idées, participer aux réunions ou tracter sur le terrain. Être membre de notre association, c'est avoir la volonté sincère de participer à une dynamique collective et de faire avancer les choses de manière positive et utile.</p>
+      <h3>Article 4 – Le respect dans nos échanges</h3>
+      <p>La qualité de nos débats fait la force et la richesse de notre mouvement. Les désaccords sont non seulement normaux, mais ils sont nécessaires pour avancer. Ils doivent cependant toujours s’exprimer avec dignité, calme et modération. L'agressivité, le mépris, la diffamation, les attaques personnelles ou le harcèlement sont strictement proscrits de tous nos échanges, qu'ils soient internes ou publics.</p>
+      <h3>Article 5 – Liberté de parole et loyauté de groupe</h3>
+      <p>Chacun est totalement libre de partager ses idées, ses doutes ou ses critiques lors de nos temps de travail internes. En contrepartie de cette liberté, une fois qu'une décision a été prise collectivement et démocratiquement, nous nous engageons à la respecter. La loyauté permet au débat d'exister ; elle interdit en revanche de saboter publiquement le travail de l'équipe ou de diffuser des informations internes pour créer de la division.</p>
+      <h3>Article 6 – La parole publique du mouvement</h3>
+      <p>Si chaque membre reste libre de ses opinions personnelles dans sa vie quotidienne, la parole officielle d’Angers au Cœur est portée uniquement par celles et ceux qui en ont reçu le mandat. Notre nom, notre logo et nos outils de communication appartiennent à tous et ne doivent en aucun cas être utilisés pour des initiatives personnelles, commerciales ou électorales sans l'accord préalable de l'équipe coordinatrice.</p>
+      <h3>Article 7 – La confiance par la discrétion</h3>
+      <p>Pour que la parole soit libre, nous devons pouvoir nous faire confiance. Cela implique de garder confidentiels les documents de travail et les discussions qui n’ont pas vocation à être rendus publics. Détourner nos échanges internes pour nuire à l'association ou à l'un de ses membres est une rupture directe de cette confiance.</p>
+      <h3>Article 8 – Une honnêteté irréprochable</h3>
+      <p>Nous nous engageons à agir avec une probité totale. Aucun membre ne doit tirer un avantage personnel, financier ou matériel du fait de son engagement chez nous. Dans le même esprit de rigueur, aucune dépense ne peut être engagée au nom du collectif et aucune collecte de fonds ne peut être organisée sans y avoir été officiellement autorisé.</p>
+      <h3>Article 9 – La protection de notre bienveillance</h3>
+      <p>Notre mouvement a le devoir de rester un espace sûr, sain et constructif pour tous. C'est pourquoi tout comportement injurieux, discriminant, menaçant ou mensonger justifiera une réaction ferme et immédiate de la part du collectif, afin de protéger nos membres et de préserver l'intégrité de notre démarche.</p>
+      <h3>Article 10 – Notre responsabilité envers le territoire</h3>
+      <p>S'engager avec nous, c'est se sentir responsable de l'avenir de l'Angers. Nous avons le devoir de porter un regard ouvert et exigeant sur notre territoire, en prenant en compte tous les habitants et toutes les réalités de nos communes. Notre attitude, sur le terrain comme en ligne, doit refléter la crédibilité et le sérieux que nous voulons pour notre région.</p>
+      <h3>Article 11 – Le respect de nos règles communes</h3>
+      <p>En signant cette charte, chaque membre reconnaît qu'elle s'inscrit dans un cadre plus large comprenant nos statuts et notre règlement intérieur. Nous nous engageons à respecter ces règles du jeu communes, qui sont les garantes de notre vie démocratique et de notre efficacité.</p>
+      <h3>Article 12 – Mon engagement personnel</h3>
+      <p>Je soussigné(e), [Nom – Prénom], reconnais avoir pris connaissance de la présente Charte d'engagement citoyen de l’association ANGERS AU CŒUR.</p>
+      <p>Je déclare en accepter pleinement les principes et m’engage à les faire vivre avec bienveillance et responsabilité tout au long de mon parcours au sein du mouvement.</p>
+      <p>Fait à                                                   , le                      .</p>
+      <p>Signature précédée de la mention « Lu et approuvé » :</p>
+    </div>
+    <div class="actions mt-2"><button id="charter-close" class="btn btn-navy" type="button">Fermer et revenir au formulaire</button></div>
+  </article>
+</dialog>
+
+<!-- Dialogue nouvelle idée -->
+<dialog id="idea-dialog" aria-labelledby="idea-dialog-title">
+  <form id="idea-form">
+    <h2 id="idea-dialog-title">Proposer une idée</h2>
+    <p class="text-muted text-small mb-2">Votre proposition sera examinée par le référent du pôle.</p>
+    
+    <label>Titre *<input name="titre" maxlength="180" required></label>
+    <label>Votre idée *<textarea name="description" maxlength="3000" required></textarea></label>
+    <label>Pôle *<select name="pole_id" required></select></label>
+    <label>Territoire concerné (facultatif)<input name="territoire" maxlength="180"></label>
+    
+    <p class="help-text text-small">Une idée proposée ici n'est pas une position officielle d'Angers au Cœur. Elle pourra être discutée et devenir un sujet de travail.</p>
+    
+    <div class="alert"></div>
+    <div class="actions mt-2">
+      <button class="btn btn-navy" type="submit">PROPOSER MON IDÉE</button>
+      <button id="idea-cancel" type="button" class="btn btn-outline">Annuler</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Dialogue réutilisable pour les actions textuelles -->
+<dialog id="text-action-dialog" aria-labelledby="text-action-title">
+  <form id="text-action-form" class="text-action-form">
+    <h2 id="text-action-title">Confirmer l’action</h2>
+    <label for="text-action-input" id="text-action-label">Votre message</label>
+    <textarea id="text-action-input" name="text" required></textarea>
+    <div class="alert" role="alert"></div>
+    <div class="actions mt-2">
+      <button id="text-action-confirm" class="btn btn-navy" type="submit">Confirmer</button>
+      <button id="text-action-cancel" class="btn btn-outline" type="button">Annuler</button>
+    </div>
+  </form>
+</dialog>
