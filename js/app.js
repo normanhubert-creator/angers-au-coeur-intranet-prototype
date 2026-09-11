@@ -26,7 +26,7 @@
   function token(){return sessionStorage.getItem(SESSION_KEY)||'';}
   function setToken(value){if(value)sessionStorage.setItem(SESSION_KEY,value);else sessionStorage.removeItem(SESSION_KEY);}
 
-  function api(method){var args=Array.prototype.slice.call(arguments,1);return Transport.call.apply(Transport,[method].concat(args));}
+  function api(method){var args=Array.prototype.slice.call(arguments,1);return Transport.call.apply(Transport,[method].concat(args)).then(function(value){refreshDebug();return value;},function(error){refreshDebug();throw error;});}
 
   function result(value){if(!value||value.ok===false){var error=new Error(value&&value.message||'Une erreur est survenue.');error.code=value&&value.code||'';error.route=value&&value.route||'';throw error;}return value.data!==undefined?value.data:value;}
 
