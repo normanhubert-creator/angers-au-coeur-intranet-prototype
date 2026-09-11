@@ -4,7 +4,7 @@
   else root.Transport=api;
 })(typeof window!=='undefined'?window:globalThis,function(){'use strict';
   var VERSION=1,REQUEST='AAC_BRIDGE_REQUEST',RESPONSE='AAC_BRIDGE_RESPONSE',READY='AAC_BRIDGE_READY';
-  var frame=null,bridgeSource=null,channel='',readyPromise=null,pending=new Map(),backendCalls=[];
+  var frame=null,bridgeSource=null,bridgeOrigin='',channel='',readyPromise=null,pending=new Map(),backendCalls=[];
 
   function config(){return window.AAC_CONFIG||{};}
   function correlationId(){
@@ -18,6 +18,12 @@
   }
   function validMessage(event,expectedSource,expectedOrigin){
     return Boolean(event&&event.source===expectedSource&&event.origin===expectedOrigin&&event.data&&event.data.version===VERSION);
+  }
+  function allowedBridgeOrigin(origin){
+    try{
+      var url=new URL(String(origin||''));
+      return url.protocol==='https:'&&url.port===''&&/^[a-z0-9-]+-script\.googleusercontent\.com$/.test(url.hostname);
+    }catch(error){return false;}
   }
   function bridgeUrl(channelId){
     var cfg=config();
@@ -36,13 +42,14 @@
       frame.setAttribute('referrerpolicy','no-referrer');
       channel=correlationId();
       function onMessage(event){
-        if(!event||event.origin!==cfg.bridgeOrigin||!event.data||event.data.version!==VERSION||event.data.channel!==channel)return;
+        if(!event||!event.data||event.data.version!==VERSION||event.data.channel!==channel)return;
         var message=event.data;
         if(message.type===READY){
-          if(!event.source)return;bridgeSource=event.source;
+          if(bridgeSource||!event.source||!allowedBridgeOrigin(event.origin))return;
+          bridgeSource=event.source;bridgeOrigin=event.origin;
           ready=true;clearTimeout(timer);resolve(true);return;
         }
-        if(event.source!==bridgeSource)return;
+        if(event.source!==bridgeSource||event.origin!==bridgeOrigin)return;
         if(message.type!==RESPONSE||typeof message.correlationId!=='string')return;
         var request=pending.get(message.correlationId);if(!request)return;
         pending.delete(message.correlationId);clearTimeout(request.timer);
@@ -67,10 +74,10 @@
       backendCalls.push(metric);
       var timer=setTimeout(function(){pending.delete(id);metric.duration=Math.round(performance.now()-metric.startedAt);metric.status='timeout';reject(publicError({code:'TRANSPORT_TIMEOUT',message:'Le service met trop de temps à répondre. Réessayez.'}));},Number(cfg.transportTimeoutMs)||30000);
       pending.set(id,{resolve:resolve,reject:reject,timer:timer,metric:metric});
-      bridgeSource.postMessage({type:REQUEST,version:VERSION,channel:channel,correlationId:id,method:method,args:args},cfg.bridgeOrigin);
+      bridgeSource.postMessage({type:REQUEST,version:VERSION,channel:channel,correlationId:id,method:method,args:args},bridgeOrigin);
     });});
   }
   function metrics(){return backendCalls.map(function(item){return Object.assign({},item,{startedAt:Math.round(item.startedAt)});});}
-  function resetForTests(){pending.forEach(function(item){clearTimeout(item.timer);});pending.clear();backendCalls=[];frame=null;bridgeSource=null;channel='';readyPromise=null;}
-  return Object.freeze({call:call,init:init,metrics:metrics,validMessage:validMessage,constants:Object.freeze({VERSION:VERSION,REQUEST:REQUEST,RESPONSE:RESPONSE,READY:READY}),_resetForTests:resetForTests});
+  function resetForTests(){pending.forEach(function(item){clearTimeout(item.timer);});pending.clear();backendCalls=[];frame=null;bridgeSource=null;bridgeOrigin='';channel='';readyPromise=null;}
+  return Object.freeze({call:call,init:init,metrics:metrics,validMessage:validMessage,allowedBridgeOrigin:allowedBridgeOrigin,constants:Object.freeze({VERSION:VERSION,REQUEST:REQUEST,RESPONSE:RESPONSE,READY:READY}),_resetForTests:resetForTests});
 });
